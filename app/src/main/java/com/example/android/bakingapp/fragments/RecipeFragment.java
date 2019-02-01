@@ -1,17 +1,20 @@
 package com.example.android.bakingapp.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.adapters.RecipeAdapter;
+
+import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class RecipeFragment extends Fragment {
 
@@ -32,11 +35,16 @@ public class RecipeFragment extends Fragment {
         mRecyclerView = rootView.findViewById(R.id.my_recycler_view);
 
         // use a linear layout manager
-        mLayoutManager = new GridLayoutManager(getActivity(), 5);
+        mLayoutManager = new GridLayoutManager(getActivity(), 1);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+
+        ArrayList<String> myDataset = new ArrayList<>();
+        String lorem = "The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.";
+        for(int i=0; i<12; i++){
+            myDataset.add(lorem);
+        }
         // specify an adapter
-        String myDataset[] = {"1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3", "1", "2", "3"};
         mAdapter = new RecipeAdapter(myDataset);
         mRecyclerView.setAdapter(mAdapter);
 

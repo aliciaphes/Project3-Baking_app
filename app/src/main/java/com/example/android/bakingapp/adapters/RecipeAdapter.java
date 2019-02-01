@@ -1,6 +1,5 @@
 package com.example.android.bakingapp.adapters;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,17 +7,21 @@ import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
 
+import java.util.ArrayList;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-    String[] mDataset;//todo: cambiar
+    ArrayList<String> mDataset;//todo: cambiar
 
-    public RecipeAdapter(String[] myDataset) {
+    public RecipeAdapter(ArrayList<String> myDataset) {
         mDataset = myDataset;
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mDataset.size();
     }
 
 
@@ -39,7 +42,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        String element = mDataset[position];
+        String element = mDataset.get(position);
         holder.mTextView.setText(element);
 
     }
@@ -54,6 +57,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         private RecipeViewHolder(View v) {
             super(v);
             mTextView = v.findViewById(R.id.recipe_title);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    // item clicked
+                }
+            });
         }
     }
 

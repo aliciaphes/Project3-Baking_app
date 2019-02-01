@@ -1,11 +1,12 @@
 package com.example.android.bakingapp.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.fragments.RecipeFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 public class RecipeDirectoryActivity extends AppCompatActivity {
 
@@ -21,12 +22,13 @@ public class RecipeDirectoryActivity extends AppCompatActivity {
         // and add it using the fragment manager (getSupportFragmentManager()) and beginTransaction() on it
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        fragmentManager.beginTransaction()
-                .add(R.id.fragment_recipe_directory,recipeFragment )
-                .commit();
+        //todo: no need to do this here because the fragment is static
+        //todo: but we will need it in the upcoming activity
+//        fragmentManager.beginTransaction()
+//                .add(R.id.fragment_recipe_directory,recipeFragment )
+//                .commit();
 
-//        useDummyJson();
-//        getRecipesFromNetwork();
+
     }
 
 //    private void useDummyJson(){
