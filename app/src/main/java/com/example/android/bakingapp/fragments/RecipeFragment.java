@@ -1,9 +1,11 @@
 package com.example.android.bakingapp.fragments;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.adapters.RecipeAdapter;
@@ -35,7 +37,7 @@ public class RecipeFragment extends Fragment {
         mRecyclerView = rootView.findViewById(R.id.my_recycler_view);
 
         // use a linear layout manager
-        mLayoutManager = new GridLayoutManager(getActivity(), 1);
+        mLayoutManager = new GridLayoutManager(getActivity(), numberOfColumns());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
 
@@ -50,4 +52,21 @@ public class RecipeFragment extends Fragment {
 
         return  rootView;
     }
+
+
+    private int numberOfColumns() {
+        int nColumns = 0;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowManager = getActivity().getWindowManager();
+        if(windowManager != null){
+            windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+            //this divider can be changed to adjust the size of the poster
+            int widthDivider = 450; //Integer.valueOf(Utilities.POSTER_SIZE);
+            int width = displayMetrics.widthPixels;
+            nColumns = width / widthDivider;
+        }
+        if(nColumns < 2) return 2;
+        return nColumns;
+    }
+
 }
