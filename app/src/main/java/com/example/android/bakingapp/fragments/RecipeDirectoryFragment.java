@@ -8,23 +8,29 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.adapters.RecipeAdapter;
+import com.example.android.bakingapp.activities.RecipeDirectoryActivity;
+import com.example.android.bakingapp.adapters.RecipeDirectoryAdapter;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class RecipeFragment extends Fragment {
+public class RecipeDirectoryFragment extends Fragment {
+
+    private ArrayList<JSONObject> recipes;
+    private RecipeDirectoryActivity hostActivity;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public RecipeFragment() {
+    public RecipeDirectoryFragment() {
     }
 
 
@@ -36,23 +42,33 @@ public class RecipeFragment extends Fragment {
 
         mRecyclerView = rootView.findViewById(R.id.my_recycler_view);
 
+        return  rootView;
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        hostActivity = (RecipeDirectoryActivity) getActivity();
+
+
+
         // use a linear layout manager
-        mLayoutManager = new GridLayoutManager(getActivity(), numberOfColumns());
+//        mLayoutManager = new GridLayoutManager(getActivity(), numberOfColumns());
+        mLayoutManager = new LinearLayoutManager(hostActivity);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        recipes = hostActivity.getRecipes();
 
         ArrayList<String> myDataset = new ArrayList<>();
-        String lorem = "The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.";
+        String lorem = getString(R.string.jules_ipsum);
         for(int i=0; i<12; i++){
             myDataset.add(lorem);
         }
         // specify an adapter
-        mAdapter = new RecipeAdapter(myDataset);
+        mAdapter = new RecipeDirectoryAdapter(myDataset, recipes);
         mRecyclerView.setAdapter(mAdapter);
-
-        return  rootView;
     }
-
 
     private int numberOfColumns() {
         int nColumns = 0;

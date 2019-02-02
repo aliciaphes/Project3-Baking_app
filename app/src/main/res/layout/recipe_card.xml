@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,9 +25,8 @@
                 android:id="@+id/recipe_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:background="@android:color/holo_orange_light"
-                tools:text="TextView" />
+                tools:text="Blueberry muffins" />
         <!--</LinearLayout>-->
 
     </androidx.cardview.widget.CardView>
