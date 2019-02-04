@@ -7,8 +7,8 @@
     tools:context=".activities.RecipeDirectoryActivity">
 
     <!--Instead of FrameLayout-->
-    <fragment
-        android:id="@+id/fragment_recipe_directory"
+    <FrameLayout
+        android:id="@+id/fragment_recipe_details"
         android:name="com.example.android.bakingapp.fragments.RecipeDetailsFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

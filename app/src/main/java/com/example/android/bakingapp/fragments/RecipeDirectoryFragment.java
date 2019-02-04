@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecipeDirectoryFragment extends Fragment {
@@ -54,8 +54,8 @@ public class RecipeDirectoryFragment extends Fragment {
 
 
         // use a linear layout manager
-//        mLayoutManager = new GridLayoutManager(getActivity(), numberOfColumns());
-        mLayoutManager = new LinearLayoutManager(hostActivity);
+        mLayoutManager = new GridLayoutManager(getActivity(), numberOfColumns());
+//        mLayoutManager = new LinearLayoutManager(hostActivity);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         recipes = hostActivity.getRecipes();
