@@ -50,8 +50,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        holder.mTextView.setText(quantity + measure + ingredient);
+        holder.mTextView.setText(String.format("%d %s %s", quantity, measure, ingredient));
     }
 
     @Override

@@ -23,6 +23,7 @@ public class SelectedRecipeActivity extends AppCompatActivity {
         RecipeDetailsFragment recipeDetailsFragment = new RecipeDetailsFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
         if(findViewById(R.id.fragment_recipe_step_details) != null) {
+            // sw600dp layout will be used:
             RecipeStepDetailsFragment recipeStepDetailsFragment = new RecipeStepDetailsFragment();
             fragmentManager.beginTransaction()
                     .add(R.id.fragment_recipe_details, recipeDetailsFragment)
