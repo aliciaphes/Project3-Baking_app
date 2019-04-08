@@ -10,8 +10,7 @@ import android.view.WindowManager;
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.activities.RecipeDirectoryActivity;
 import com.example.android.bakingapp.adapters.RecipeDirectoryAdapter;
-
-import org.json.JSONObject;
+import com.example.android.bakingapp.models.Recipe;
 
 import java.util.ArrayList;
 
@@ -23,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecipeDirectoryFragment extends Fragment {
 
-    private ArrayList<JSONObject> recipes;
     private RecipeDirectoryActivity hostActivity;
 
     private RecyclerView mRecyclerView;
@@ -42,7 +40,7 @@ public class RecipeDirectoryFragment extends Fragment {
 
         mRecyclerView = rootView.findViewById(R.id.my_recycler_view);
 
-        return  rootView;
+        return rootView;
     }
 
 
@@ -58,15 +56,10 @@ public class RecipeDirectoryFragment extends Fragment {
 //        mLayoutManager = new LinearLayoutManager(hostActivity);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        recipes = hostActivity.getRecipes();
+        ArrayList<Recipe> recipes = hostActivity.getRecipes();
 
-        ArrayList<String> myDataset = new ArrayList<>();
-        String lorem = getString(R.string.jules_ipsum);
-        for(int i=0; i<12; i++){
-            myDataset.add(lorem);
-        }
         // specify an adapter
-        mAdapter = new RecipeDirectoryAdapter(myDataset, recipes);
+        mAdapter = new RecipeDirectoryAdapter(/*myDataset,*/ recipes); //todo descomentar
         mRecyclerView.setAdapter(mAdapter);
     }
 

@@ -13,8 +13,9 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Ingredients"
-        android:text="Ingredients"
+        tools:text="@string/ingredients"
+        android:text="@string/ingredients"
+        android:layout_marginBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,9 +30,10 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Recyclerview with steps here"
-        android:text="Recyclerview with steps here"
+        tools:text="@string/recyclerview_with_steps_here"
+        android:text="@string/recyclerview_with_steps_here"
         app:layout_constraintTop_toBottomOf="@id/recycler_view_ingredients" />
 
     <androidx.recyclerview.widget.RecyclerView

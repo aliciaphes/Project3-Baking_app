@@ -39,7 +39,6 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
     public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
         JSONObject element = (JSONObject) ingredients.get(position);
 
-
         int quantity = 0;
         String measure = "";
         String ingredient = "";

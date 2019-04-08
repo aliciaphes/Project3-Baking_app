@@ -9,9 +9,7 @@ import android.widget.TextView;
 
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.activities.SelectedRecipeActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.android.bakingapp.models.Recipe;
 
 import java.util.ArrayList;
 
@@ -19,17 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class RecipeDirectoryAdapter extends RecyclerView.Adapter<RecipeDirectoryAdapter.RecipeViewHolder> {
 
-    private ArrayList<JSONObject> recipes;
-    private ArrayList<String> mDataset;//todo: cambiar
+    private ArrayList<Recipe> recipes;
 
-    public RecipeDirectoryAdapter(ArrayList<String> myDataset, ArrayList<JSONObject> recipes) {
-        mDataset = myDataset;
+
+
+public RecipeDirectoryAdapter(ArrayList<Recipe> recipes) {
         this.recipes = recipes;
     }
 
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return recipes.size();
     }
 
 
@@ -47,27 +45,28 @@ public class RecipeDirectoryAdapter extends RecyclerView.Adapter<RecipeDirectory
 
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
-        // - get element from dataset at this position
+        // - get element at this position
         // - replace the contents of the view with that element
 
-        String element = mDataset.get(position);
-        String name = "";
-        int index = position % recipes.size();
-        try {
-            name = recipes.get(index).getString("name");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        holder.mTextView.setText(name + "\n" + element); //todo: do not concatenate
-
+        Recipe recipe = recipes.get(position);
+        String name = recipe.getName();
+//        String name = "";
+//        int index = position % recipes.size();
+//        try {
+//            name = recipes.get(index).getString("name");
+//        name = recipe.getString("name");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+////        holder.mTextView.setText(name + "\n" + element); //todo: do not concatenate
+        holder.mTextView.setText(name);
     }
 
 
-    public static class RecipeViewHolder extends RecyclerView.ViewHolder {
+    public class RecipeViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTextView;
-        //todo: add here all the UI elements of the recipe
 
 
         private RecipeViewHolder(View v) {
@@ -75,9 +74,15 @@ public class RecipeDirectoryAdapter extends RecyclerView.Adapter<RecipeDirectory
             mTextView = v.findViewById(R.id.recipe_title);
             v.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent selectedRecipeIntent = new Intent(context, SelectedRecipeActivity.class);
-                    context.startActivity(selectedRecipeIntent);
+
+                    int position = getAdapterPosition();
+                    Recipe recipe = recipes.get(position);
+                    if (recipe != null) {
+                        Context context = v.getContext();
+                        Intent selectedRecipeIntent = new Intent(context, SelectedRecipeActivity.class);
+                        selectedRecipeIntent.putExtra("CLICKED_RECIPE", recipe);
+                        context.startActivity(selectedRecipeIntent);
+                    }
                 }
             });
         }
