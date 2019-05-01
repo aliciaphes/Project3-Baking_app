@@ -5,15 +5,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.bakingapp.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android.bakingapp.R;
+
+import java.util.ArrayList;
 
 public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder> {
 
@@ -37,19 +34,10 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull IngredientViewHolder holder, int position) {
-        JSONObject element = (JSONObject) ingredients.get(position);
 
-        int quantity = 0;
-        String measure = "";
-        String ingredient = "";
-        try {
-            quantity = element.getInt("quantity");
-            measure = element.getString("measure");
-            ingredient = element.getString("ingredient");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        holder.mTextView.setText(String.format("%d %s %s", quantity, measure, ingredient));
+        String ingredient = (String) ingredients.get(position);
+        holder.mTextView.setText(ingredient);
+
     }
 
     @Override
@@ -63,7 +51,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
 
         public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
-            mTextView = itemView.findViewById(R.id.ingredient);
+            mTextView = itemView.findViewById(R.id.text);
         }
     }
 }

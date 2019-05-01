@@ -30,10 +30,11 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/recyclerview_with_steps_here"
-        android:text="@string/recyclerview_with_steps_here"
+        tools:text="@string/recipe_steps"
+        android:text="@string/recipe_steps"
         app:layout_constraintTop_toBottomOf="@id/recycler_view_ingredients" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -2,6 +2,8 @@ package com.example.android.bakingapp.activities;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.models.Recipe;
 
@@ -10,8 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class RecipeDirectoryActivity extends AppCompatActivity {
 
@@ -52,7 +52,7 @@ public class RecipeDirectoryActivity extends AppCompatActivity {
                 recipe.setName(jsonRecipe.getString("name"));
                 JSONArray ingredients = jsonRecipe.getJSONArray("ingredients");
                 recipe.setIngredients(ingredients);
-//                recipe.setSteps(jsonRecipe.getJSONArray("steps"));
+                recipe.setSteps(jsonRecipe.getJSONArray("steps"));
                 recipe.setServings(jsonRecipe.getInt("servings"));
                 recipe.setImageURL(jsonRecipe.getString("image"));
                 recipes.add(recipe);

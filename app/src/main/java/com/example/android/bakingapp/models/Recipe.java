@@ -16,29 +16,19 @@ public class Recipe implements Parcelable {
     private int servings;
     private String imageURL;
     private ArrayList<String> ingredients;
-//    steps
+    private ArrayList<String> steps; //will contain the stringified json
 
     public Recipe() {
         name = "";
         ingredients = new ArrayList<>();
+        steps = new ArrayList<>();
     }
 
     protected Recipe(Parcel in) {
         name = in.readString();
         ingredients = (ArrayList<String>)in.readArrayList(ArrayList.class.getClassLoader());
+        steps = (ArrayList<String>)in.readArrayList(ArrayList.class.getClassLoader());
     }
-
-    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
-        @Override
-        public Recipe createFromParcel(Parcel in) {
-            return new Recipe(in);
-        }
-
-        @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
-        }
-    };
 
     @Override
     public int describeContents() {
@@ -49,10 +39,16 @@ public class Recipe implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeList(ingredients);
+        parcel.writeList(steps);
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public ArrayList<String> getIngredients() {
+        return ingredients;
     }
 
     public void setIngredients(JSONArray ingredients) {
@@ -77,9 +73,18 @@ public class Recipe implements Parcelable {
         }
     }
 
-//    public void setSteps(JSONArray steps) {
-//        this.steps = steps;
-//    }
+    public void setSteps(JSONArray steps) {
+        for(int i=0; i<steps.length(); i++) {
+            try {
+                JSONObject step = (JSONObject) steps.get(i);
+                this.steps.add(step.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //todo: getSteps?
 
     public void setServings(int servings) {
         this.servings = servings;
@@ -92,4 +97,25 @@ public class Recipe implements Parcelable {
     public String getName() {
         return name;
     }
+
+    public ArrayList<String> getSteps() {
+        return steps;
+    }
+
+
+
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
+
+
 }

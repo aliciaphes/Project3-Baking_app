@@ -38,7 +38,7 @@ public class RecipeDirectoryFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_recipe_directory, container, false);
 
-        mRecyclerView = rootView.findViewById(R.id.my_recycler_view);
+        mRecyclerView = rootView.findViewById(R.id.recipe_directory_recyclerview);
 
         return rootView;
     }

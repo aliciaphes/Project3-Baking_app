@@ -5,27 +5,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.adapters.IngredientsAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.bakingapp.R;
+import com.example.android.bakingapp.adapters.ListAdapter;
+import com.example.android.bakingapp.models.Recipe;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class RecipeDetailsFragment extends Fragment {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+//    private RecyclerView ingredientsRecyclerView;
+//    private RecyclerView.Adapter mAdapter;
 
-    private ArrayList<JSONObject> ingredients;
+//    private ArrayList<JSONObject> ingredients;
 
     public RecipeDetailsFragment() {
     }
@@ -36,28 +36,38 @@ public class RecipeDetailsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.recipe_details_card, container, false);
 
-        mRecyclerView = rootView.findViewById(R.id.recycler_view_ingredients);
+        RecyclerView ingredientsRecyclerView = rootView.findViewById(R.id.recycler_view_ingredients);
+        RecyclerView stepsRecyclerView = rootView.findViewById(R.id.recycler_view_steps);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //todo: the following is temporary:
-        ingredients = new ArrayList<>();
-        try {
-            JSONArray dummyRecipesArray = new JSONArray(getResources().getString(R.string.recipes_json));
+        ingredientsRecyclerView.setLayoutManager(mLayoutManager);
+        stepsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-            JSONObject recipe = (JSONObject) dummyRecipesArray.get(0);
+        Bundle recipeBundle = getArguments();
+        if(recipeBundle != null) {
+            Recipe selectedRecipe = recipeBundle.getParcelable("SELECTED_RECIPE");
 
-            JSONArray ing = recipe.getJSONArray("ingredients");
-            for (int i = 0; i < ing.length(); i++) {
-                ingredients.add((JSONObject) ing.get(i));
+            ArrayList<String> ingredients = selectedRecipe.getIngredients();
+//            IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(ingredients);
+            ListAdapter ingredientsAdapter = new ListAdapter(ingredients, R.layout.ingredient);
+            ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+
+            ArrayList<String> recipeSteps = selectedRecipe.getSteps();
+            ArrayList<String> steps = new ArrayList<>();
+            for(int i=0; i<recipeSteps.size(); i++) {
+                try {
+                    JSONObject obj = new JSONObject(recipeSteps.get(i));
+                    steps.add(obj.getString("shortDescription"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+//          StepsAdapter stepsAdapter = new IngredientsAdapter(steps);
+            ListAdapter stepsAdapter = new ListAdapter(steps, R.layout.step);
+            stepsRecyclerView.setAdapter(stepsAdapter);
         }
-
-        mAdapter = new IngredientsAdapter(ingredients);
-        mRecyclerView.setAdapter(mAdapter);
-
         return rootView;
     }
 }
