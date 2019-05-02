@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.android.bakingapp.R;
 import com.example.android.bakingapp.activities.SelectedRecipeActivity;
 import com.example.android.bakingapp.models.Recipe;
 
 import java.util.ArrayList;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 public class RecipeDirectoryAdapter extends RecyclerView.Adapter<RecipeDirectoryAdapter.RecipeViewHolder> {
 
@@ -33,33 +33,20 @@ public RecipeDirectoryAdapter(ArrayList<Recipe> recipes) {
 
     @Override
     public RecipeDirectoryAdapter.RecipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         View v = inflater.inflate(R.layout.recipe_card, parent, false);
 
-        RecipeViewHolder vh = new RecipeViewHolder(v);
-        return vh;
+        return new RecipeViewHolder(v);
     }
 
 
     @Override
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
-        // - get element at this position
-        // - replace the contents of the view with that element
-
 
         Recipe recipe = recipes.get(position);
         String name = recipe.getName();
-//        String name = "";
-//        int index = position % recipes.size();
-//        try {
-//            name = recipes.get(index).getString("name");
-//        name = recipe.getString("name");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-////        holder.mTextView.setText(name + "\n" + element); //todo: do not concatenate
         holder.mTextView.setText(name);
     }
 

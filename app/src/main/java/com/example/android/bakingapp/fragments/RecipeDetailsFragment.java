@@ -12,23 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.bakingapp.R;
-import com.example.android.bakingapp.adapters.ListAdapter;
+import com.example.android.bakingapp.adapters.IngredientsAdapter;
+import com.example.android.bakingapp.adapters.StepsAdapter;
 import com.example.android.bakingapp.models.Recipe;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.android.bakingapp.models.RecipeStep;
 
 import java.util.ArrayList;
 
 public class RecipeDetailsFragment extends Fragment {
 
-//    private RecyclerView ingredientsRecyclerView;
-//    private RecyclerView.Adapter mAdapter;
-
-//    private ArrayList<JSONObject> ingredients;
-
     public RecipeDetailsFragment() {
     }
+
 
     @Nullable
     @Override
@@ -39,9 +34,7 @@ public class RecipeDetailsFragment extends Fragment {
         RecyclerView ingredientsRecyclerView = rootView.findViewById(R.id.recycler_view_ingredients);
         RecyclerView stepsRecyclerView = rootView.findViewById(R.id.recycler_view_steps);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-
-        ingredientsRecyclerView.setLayoutManager(mLayoutManager);
+        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         stepsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Bundle recipeBundle = getArguments();
@@ -49,23 +42,14 @@ public class RecipeDetailsFragment extends Fragment {
             Recipe selectedRecipe = recipeBundle.getParcelable("SELECTED_RECIPE");
 
             ArrayList<String> ingredients = selectedRecipe.getIngredients();
-//            IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(ingredients);
-            ListAdapter ingredientsAdapter = new ListAdapter(ingredients, R.layout.ingredient);
+            IngredientsAdapter ingredientsAdapter = new IngredientsAdapter(ingredients);
+//            ListAdapter ingredientsAdapter = new ListAdapter(getActivity(), ingredients, R.layout.ingredient);
             ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
-            ArrayList<String> recipeSteps = selectedRecipe.getSteps();
-            ArrayList<String> steps = new ArrayList<>();
-            for(int i=0; i<recipeSteps.size(); i++) {
-                try {
-                    JSONObject obj = new JSONObject(recipeSteps.get(i));
-                    steps.add(obj.getString("shortDescription"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+            ArrayList<RecipeStep> recipeSteps = selectedRecipe.getSteps();
 
-//          StepsAdapter stepsAdapter = new IngredientsAdapter(steps);
-            ListAdapter stepsAdapter = new ListAdapter(steps, R.layout.step);
+          StepsAdapter stepsAdapter = new StepsAdapter(getActivity(), recipeSteps);
+//            ListAdapter stepsAdapter = new ListAdapter(getActivity(), recipeSteps, R.layout.step);
             stepsRecyclerView.setAdapter(stepsAdapter);
         }
         return rootView;

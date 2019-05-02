@@ -16,7 +16,10 @@ public class Recipe implements Parcelable {
     private int servings;
     private String imageURL;
     private ArrayList<String> ingredients;
-    private ArrayList<String> steps; //will contain the stringified json
+
+//    private ArrayList<String> steps; //will contain the stringified json
+    private ArrayList<RecipeStep> steps;
+
 
     public Recipe() {
         name = "";
@@ -26,8 +29,10 @@ public class Recipe implements Parcelable {
 
     protected Recipe(Parcel in) {
         name = in.readString();
-        ingredients = (ArrayList<String>)in.readArrayList(ArrayList.class.getClassLoader());
-        steps = (ArrayList<String>)in.readArrayList(ArrayList.class.getClassLoader());
+//        ingredients = (ArrayList<String>)in.readArrayList(ArrayList.class.getClassLoader());
+        ingredients = in.readArrayList(String.class.getClassLoader());
+//        steps = (ArrayList<RecipeStep>)in.readArrayList(ArrayList.class.getClassLoader());
+        steps = in.readArrayList(RecipeStep.class.getClassLoader());
     }
 
     @Override
@@ -77,14 +82,19 @@ public class Recipe implements Parcelable {
         for(int i=0; i<steps.length(); i++) {
             try {
                 JSONObject step = (JSONObject) steps.get(i);
-                this.steps.add(step.toString());
+                String shortDescription = step.getString("shortDescription");
+                String description = step.getString("description");
+                String videoURL = step.getString("videoURL");
+                String thumbnailURL = step.getString("thumbnailURL");
+                RecipeStep recipeStep = new RecipeStep(shortDescription, description, videoURL, thumbnailURL);
+                this.steps.add(recipeStep);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    //todo: getSteps?
+
 
     public void setServings(int servings) {
         this.servings = servings;
@@ -98,7 +108,7 @@ public class Recipe implements Parcelable {
         return name;
     }
 
-    public ArrayList<String> getSteps() {
+    public ArrayList<RecipeStep> getSteps() {
         return steps;
     }
 

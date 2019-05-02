@@ -6,11 +6,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Video and step instructions go here"
-        android:text="Video and step instructions go here" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Short description" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/jules_ipsum" />
 </androidx.constraintlayout.widget.ConstraintLayout>
