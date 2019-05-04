@@ -14,11 +14,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Short description" />
 
+
+    <!-- <com.google.android.exoplayer2.ui.SimpleExoPlayerView -->
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/player_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/player_view"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/jules_ipsum" />
 </androidx.constraintlayout.widget.ConstraintLayout>

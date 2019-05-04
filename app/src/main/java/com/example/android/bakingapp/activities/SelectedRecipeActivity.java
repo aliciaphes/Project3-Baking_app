@@ -60,18 +60,34 @@ public class SelectedRecipeActivity extends AppCompatActivity {
 
     public void toggleFragments(RecipeStep recipeStep){
         if(fragmentManager != null){
+
+//            fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+//                @Override
+//                public void onBackStackChanged() {
+//                    // start playing the video
+//                    recipeStepDetailsFragment.preparePlayer();
+//                }
+//            });
+
+            if (recipeStepDetailsFragment == null) {
+                recipeStepDetailsFragment = new RecipeStepDetailsFragment();
+            }
+
+            recipeStepDetailsFragment.setStep(recipeStep);
+
+            //todo: refactor this if/else
             if(mTwoPane){
-                //todo: populate fragment with details
-                recipeStepDetailsFragment.setStep(recipeStep);
             } else { // modify visibility:
 
                 // todo: put current fragment in the stack????
 //                fragmentManager.putFragment(Bundle bundle, String key, Fragment fragment);
-                //todo: replace fragment with details
+
+                // simulate fragment replacement by showing or hiding:
                 FragmentTransaction ft = fragmentManager.beginTransaction();
 
-                if (recipeStepDetailsFragment == null) {
-                    recipeStepDetailsFragment = new RecipeStepDetailsFragment();
+                // Hide recipeDetailsFragment
+                if (recipeDetailsFragment.isAdded()) {
+                    ft.hide(recipeDetailsFragment);
                 }
 
                 if (recipeStepDetailsFragment.isAdded()) { // if the fragment is already in container
@@ -79,19 +95,18 @@ public class SelectedRecipeActivity extends AppCompatActivity {
                 } else { // fragment needs to be added to frame container
                     ft.add(R.id.fragment_recipe_container, recipeStepDetailsFragment);
                 }
-                // Hide recipeDetailsFragment
-                if (recipeDetailsFragment.isAdded()) {
-                    ft.hide(recipeDetailsFragment);
-                }
+
                 ft.commit();
             }
+//            // start playing the video
+//            recipeStepDetailsFragment.preparePlayer();
         }
     }
 
 
     @Override
     public void onBackPressed() {
-        //if details is showing, simulate going back by showing another fragment
+        //if details fragment is showing, simulate going back by showing another fragment
         if (recipeStepDetailsFragment != null && recipeStepDetailsFragment.isVisible()) {
             fragmentManager.beginTransaction()
             .hide(recipeStepDetailsFragment)
