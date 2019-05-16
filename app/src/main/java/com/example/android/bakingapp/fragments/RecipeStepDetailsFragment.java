@@ -111,9 +111,9 @@ public class RecipeStepDetailsFragment extends Fragment {
     public void preparePlayer() {
         if (exoPlayer != null) {
 
-//            Uri uri = Uri.parse(selectedStep.getVideoURL());
-            Uri uri = Uri.parse("asset:///4-press-crumbs-in-pie-plate-creampie.mp4");
+            Uri uri = Uri.parse(selectedStep.getVideoURL());
             if (uri.toString().length() > 0) {
+                uri = Uri.parse("asset:///4-press-crumbs-in-pie-plate-creampie.mp4"); //todo: temporary
                 MediaSource mediaSource = buildMediaSource(uri);
                 exoPlayer.prepare(mediaSource, true, false);
 

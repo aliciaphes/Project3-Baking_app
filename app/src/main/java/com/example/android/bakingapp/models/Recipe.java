@@ -3,19 +3,24 @@ package com.example.android.bakingapp.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.android.bakingapp.viewmodel.RecyclerViewAdapterViewModel;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Recipe implements Parcelable {
+public class Recipe extends RecyclerViewAdapterViewModel implements Parcelable {
 
     //todo: id?
     private String name;
     private int servings;
     private String imageURL;
-    private ArrayList<String> ingredients;
+
+//    private ArrayList<String> ingredients;
+//    private RecipeIngredients ingredients;
+    private ArrayList<RecipeIngredient> ingredients;
 
 //    private ArrayList<String> steps; //will contain the stringified json
     private ArrayList<RecipeStep> steps;
@@ -24,13 +29,18 @@ public class Recipe implements Parcelable {
     public Recipe() {
         name = "";
         ingredients = new ArrayList<>();
+//        ingredients = new RecipeIngredients();
         steps = new ArrayList<>();
     }
 
     protected Recipe(Parcel in) {
         name = in.readString();
+
 //        ingredients = (ArrayList<String>)in.readArrayList(ArrayList.class.getClassLoader());
-        ingredients = in.readArrayList(String.class.getClassLoader());
+//        ingredients = in.readArrayList(String.class.getClassLoader());
+//        ingredients = in.readParcelable(RecipeIngredients.class.getClassLoader());
+        ingredients = in.readArrayList(RecipeIngredient.class.getClassLoader());
+
 //        steps = (ArrayList<RecipeStep>)in.readArrayList(ArrayList.class.getClassLoader());
         steps = in.readArrayList(RecipeStep.class.getClassLoader());
     }
@@ -43,7 +53,10 @@ public class Recipe implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
+
         parcel.writeList(ingredients);
+//        parcel.writeParcelable(ingredients, i);
+
         parcel.writeList(steps);
     }
 
@@ -52,8 +65,10 @@ public class Recipe implements Parcelable {
     }
 
 
-    public ArrayList<String> getIngredients() {
+//    public ArrayList<String> getIngredients() {
+    public ArrayList<RecipeIngredient> getIngredients() {
         return ingredients;
+//        return ingredients.getIngredients();
     }
 
     public void setIngredients(JSONArray ingredients) {
@@ -71,7 +86,8 @@ public class Recipe implements Parcelable {
                 ingredient = ingredientObject.getString("ingredient");
 //            String.format("%d %s %s", quantity, measure, ingredient);
                 finalIngredient = quantity + " " + measure + " " + ingredient;
-                this.ingredients.add(finalIngredient);
+//                this.ingredients.add(finalIngredient);
+                this.ingredients.add(new RecipeIngredient(finalIngredient));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

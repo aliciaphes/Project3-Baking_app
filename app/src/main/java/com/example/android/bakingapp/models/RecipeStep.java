@@ -2,8 +2,13 @@ package com.example.android.bakingapp.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
 
-public class RecipeStep implements Parcelable {
+import androidx.databinding.BindingAdapter;
+
+import com.example.android.bakingapp.viewmodel.RecyclerViewAdapterViewModel;
+
+public class RecipeStep extends RecyclerViewAdapterViewModel implements Parcelable {
 
     private String shortDescription;
     private String description;
@@ -40,6 +45,11 @@ public class RecipeStep implements Parcelable {
         thumbnailURL = in.readString();
     }
 
+
+    @BindingAdapter("android:visibility")
+    public static void setVisibility(View view, String videoURL) {
+        view.setVisibility(videoURL.length() == 0 ? View.INVISIBLE : View.VISIBLE);
+    }
 
 
 
