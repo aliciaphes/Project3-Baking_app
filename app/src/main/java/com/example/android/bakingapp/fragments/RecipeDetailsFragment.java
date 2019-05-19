@@ -70,8 +70,6 @@ public class RecipeDetailsFragment extends Fragment {
                 public void onClick(View view, int position) {
                     RecipeStep recipeStep = recipeSteps.get(position);
                     if(recipeStep.getVideoURL().length() > 0){ // only react if videourl is not null
-                        // todo: replace fragment if phone or show info if tablet
-
                         SelectedRecipeActivity activity = (SelectedRecipeActivity)getActivity();
                         activity.toggleFragments(recipeStep);
                     }

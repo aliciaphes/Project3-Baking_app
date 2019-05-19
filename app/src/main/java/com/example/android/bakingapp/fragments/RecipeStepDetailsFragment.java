@@ -32,6 +32,8 @@ public class RecipeStepDetailsFragment extends Fragment {
 
     private RecipeStep selectedStep;
 
+    private boolean mTwoPane;
+
     private TextView tvTitle;
     private TextView tvDescription;
 
@@ -55,7 +57,9 @@ public class RecipeStepDetailsFragment extends Fragment {
     }
 
 
-
+    public void setTwoPane(boolean twoPane) {
+        mTwoPane = twoPane;
+    }
 
     @Nullable
     @Override
@@ -179,10 +183,12 @@ public class RecipeStepDetailsFragment extends Fragment {
 
 
     @Override
-    public void onStart() {
+    public void onStart() { //fragment becomes visible
         super.onStart();
-        if (Util.SDK_INT > 23) {
+//        if (Util.SDK_INT > 23) {
             initializePlayer();
+//        }
+        if(!mTwoPane){
             preparePlayer();
         }
     }
@@ -191,36 +197,37 @@ public class RecipeStepDetailsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         hideSystemUi();
-        if ((Util.SDK_INT <= 23 || exoPlayer == null)) {
-            initializePlayer();
-            preparePlayer();
-        }
+//        if ((Util.SDK_INT <= 23 || exoPlayer == null)) {
+//            initializePlayer();
+//            preparePlayer();
+//        }
     }
 
     @SuppressLint("InlinedApi")
     private void hideSystemUi() {
         playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
+//                | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        );
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (Util.SDK_INT <= 23) {
+//        if (Util.SDK_INT <= 23) {
             releasePlayer();
-        }
+//        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (Util.SDK_INT > 23) {
+//        if (Util.SDK_INT > 23) {
             releasePlayer();
-        }
+//        }
     }
 
     private void releasePlayer() {
@@ -232,4 +239,6 @@ public class RecipeStepDetailsFragment extends Fragment {
             exoPlayer = null;
         }
     }
+
+
 }

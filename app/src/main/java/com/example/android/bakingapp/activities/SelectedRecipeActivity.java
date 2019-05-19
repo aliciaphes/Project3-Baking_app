@@ -40,18 +40,24 @@ public class SelectedRecipeActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
+        recipeStepDetailsFragment = new RecipeStepDetailsFragment(); // create it for later
+
         if(findViewById(R.id.fragment_recipe_step_details) != null) {
 
             mTwoPane = true;
 
+            recipeStepDetailsFragment.setTwoPane(mTwoPane);
+
             // sw600dp layout will be used:
-            recipeStepDetailsFragment = new RecipeStepDetailsFragment();
             fragmentManager.beginTransaction()
                     .add(R.id.fragment_recipe_container, recipeDetailsFragment)
                     .add(R.id.fragment_recipe_step_details, recipeStepDetailsFragment)
                     .commit();
         } else {
             mTwoPane = false;
+
+            recipeStepDetailsFragment.setTwoPane(mTwoPane);
+
             fragmentManager.beginTransaction()
                     .add(R.id.fragment_recipe_container, recipeDetailsFragment)
                     .commit();
@@ -61,22 +67,12 @@ public class SelectedRecipeActivity extends AppCompatActivity {
     public void toggleFragments(RecipeStep recipeStep){
         if(fragmentManager != null){
 
-//            fragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-//                @Override
-//                public void onBackStackChanged() {
-//                    // start playing the video
-//                    recipeStepDetailsFragment.preparePlayer();
-//                }
-//            });
-
-            if (recipeStepDetailsFragment == null) {
-                recipeStepDetailsFragment = new RecipeStepDetailsFragment();
-            }
-
             recipeStepDetailsFragment.setStep(recipeStep);
 
-            //todo: refactor this if/else
             if(mTwoPane){
+
+                recipeStepDetailsFragment.preparePlayer();
+
             } else { // modify visibility:
 
                 // todo: put current fragment in the stack????
@@ -89,25 +85,21 @@ public class SelectedRecipeActivity extends AppCompatActivity {
                 if (recipeDetailsFragment.isAdded()) {
                     ft.hide(recipeDetailsFragment);
                 }
-
                 if (recipeStepDetailsFragment.isAdded()) { // if the fragment is already in container
                     ft.show(recipeStepDetailsFragment);
                 } else { // fragment needs to be added to frame container
                     ft.add(R.id.fragment_recipe_container, recipeStepDetailsFragment);
                 }
-
                 ft.commit();
             }
-//            // start playing the video
-//            recipeStepDetailsFragment.preparePlayer();
         }
     }
 
 
     @Override
     public void onBackPressed() {
-        //if details fragment is showing, simulate going back by showing another fragment
-        if (recipeStepDetailsFragment != null && recipeStepDetailsFragment.isVisible()) {
+        //if details fragment is showing (when not in two-pane mode), simulate going back by showing another fragment
+        if (!mTwoPane && recipeStepDetailsFragment != null && recipeStepDetailsFragment.isVisible()) {
             fragmentManager.beginTransaction()
             .hide(recipeStepDetailsFragment)
             .show(recipeDetailsFragment)
